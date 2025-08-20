@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrinho - MiniStore</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html">
+        <img src="assets/logo.png" alt="Logo MiniStore" class="brand-logo">
+        <span class="brand-name">MiniStore</span>
+      </a>
+      <nav class="menu">
+        <a href="index.html">Início</a>
+        <a href="checkout.html">Checkout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2 class="sec-title">Itens no Carrinho</h2>
+    <ul id="cart-items" class="cart-list"></ul>
+    <p id="total" class="total"></p>
+    <div class="cart-actions">
+      <a href="checkout.html" class="btn">Ir para Checkout</a>
+      <button class="btn btn-clear" onclick="clearCart()">Limpar Carrinho</button>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2025 MiniStore - Loja Fictícia</div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
