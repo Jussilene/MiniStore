@@ -309,3 +309,128 @@ body{
   from{ transform:scale(.7); opacity:0; }
   to{ transform:scale(1); opacity:1; }
 }
+
+/* ====== MiniStore — responsividade mobile sem mexer no desktop ====== */
+
+/* Bases seguras para imagens e tipografia fluida */
+:root{
+  /* escala de fonte que se adapta sem explodir no mobile */
+  --fs-base: clamp(14px, 2.6vw, 16px);
+  --radius: 14px;
+}
+html{ font-size: var(--fs-base); }
+img{ max-width:100%; height:auto; display:block; }
+
+/* Container com respiro lateral no mobile */
+.container{ padding-left:16px; padding-right:16px; }
+
+/* Toques maiores no mobile */
+button, .btn, input, select{
+  min-height:44px; /* acessibilidade */
+}
+
+/* Top bar: centraliza no mobile */
+@media (max-width: 768px){
+  .top-bar{ font-size: 0.95rem; }
+  .top-bar .top-bar-inner{ justify-content:center; }
+  .top-bar .top-bar-center{ gap:8px; }
+}
+
+/* Header: empilha logo, busca e ícones */
+@media (max-width: 992px){
+  header.topbar{ padding:10px 0; }
+  header.topbar .container{ display:flex; flex-direction:column; gap:10px; }
+  .topbar .brand,
+  .topbar .search,
+  .topbar .actions{ width:100%; }
+  .topbar .search input{ width:100%; }
+  .topbar .actions{ display:flex; justify-content:space-between; }
+}
+
+/* Navbar: vira “linhas” e permite quebrar */
+@media (max-width: 768px){
+  .nav, .nav ul{
+    display:flex; flex-wrap:wrap; gap:10px;
+  }
+  .nav a{ padding:10px 12px; border-radius:12px; }
+}
+
+/* Hero: imagem acima, texto abaixo e tudo centralizado */
+@media (max-width: 768px){
+  .hero{
+    display:flex; flex-direction:column; gap:14px; text-align:center;
+    padding:18px;
+  }
+  .hero .hero-media{ order:-1; }
+  .hero .hero-title{ font-size: clamp(1.25rem, 5.4vw, 2rem); line-height:1.2; }
+  .hero .hero-sub{ font-size: 1rem; opacity:.9; }
+  .hero .hero-cta .btn{ width:100%; }
+}
+
+/* Grade de produtos: 2 colunas no tablet, 1 no celular pequeno */
+.products-grid{
+  display:grid; grid-template-columns: repeat(4, 1fr); gap:18px;
+}
+@media (max-width: 1200px){
+  .products-grid{ grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 900px){
+  .products-grid{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px){
+  .products-grid{ grid-template-columns: 1fr; }
+}
+
+/* Card do produto: ajusta espaçamentos e botões “tocáveis” */
+.product-card{
+  border-radius: var(--radius);
+  overflow:hidden;
+}
+.product-card .price{ font-size:1.05rem; }
+.product-card .actions .btn{ width:100%; }
+
+/* Banner/Seções em duas colunas: viram coluna única no mobile */
+.split, .grid-2{
+  display:grid; grid-template-columns: 1fr 1fr; gap:20px;
+}
+@media (max-width: 768px){
+  .split, .grid-2{ grid-template-columns: 1fr; }
+}
+
+/* Carrinho lateral: ocupa tela toda no mobile (se você usa sidebar) */
+@media (max-width: 768px){
+  .cart-drawer{
+    width:100vw; max-width:none; left:0; right:0; border-radius:16px 16px 0 0;
+  }
+}
+
+/* Formulários (contato/checkout): uma coluna e inputs 100% */
+@media (max-width: 768px){
+  .form-grid{ display:grid; grid-template-columns:1fr; gap:12px; }
+  .form-grid input, .form-grid select, .form-grid textarea{ width:100%; }
+  .form-actions .btn{ width:100%; }
+}
+
+/* Tabelas (resumo do pedido): rolagem horizontal suave no mobile */
+@media (max-width: 768px){
+  .table-wrapper{ overflow:auto; -webkit-overflow-scrolling: touch; }
+  table{ min-width:600px; }
+}
+
+/* Rodapé: empilha colunas e centraliza */
+@media (max-width: 768px){
+  footer .footer-grid{
+    display:grid; grid-template-columns:1fr; gap:16px; text-align:center;
+  }
+}
+
+/* Utilitários: mostrar/ocultar por breakpoint sem mexer no HTML existente */
+@media (max-width: 768px){ .hide-sm{ display:none !important; } }
+@media (min-width: 769px){ .show-sm{ display:none !important; } }
+
+/* Evita “estouro” de textos longos em nomes de produtos */
+.product-card .title,
+.hero .hero-title{
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
