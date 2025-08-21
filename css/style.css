@@ -54,11 +54,7 @@ body{
   box-shadow:0 6px 16px rgba(0,0,0,.10);
   border:1px solid rgba(0,0,0,.06);
   min-width:320px;
-
-  /* NOVO: deixar a busca maior e mais centralizada entre logo e links */
-  flex:1;
-  max-width:640px;
-  margin:0 24px;
+  flex:1; max-width:640px; margin:0 24px;
 }
 .search input{border:0; outline:0; flex:1; font-size:14px; background:transparent; color:#1f2a37;}
 .search input::placeholder{color:#9aa4b2}
@@ -87,19 +83,9 @@ body{
 
 /* ===== Promo: faixa inteira pulsando ===== */
 .promo-strip{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  gap:10px;
-
-  background:#fff;
-  border:1px solid #eee;
-  padding:12px 16px;
-  margin:16px 0;
-  border-radius:16px;
-  text-decoration:none;
-  color:inherit;
+  display:flex; align-items:center; justify-content:center; text-align:center; gap:10px;
+  background:#fff; border:1px solid #eee; padding:12px 16px; margin:16px 0;
+  border-radius:16px; text-decoration:none; color:inherit;
   box-shadow:0 6px 18px rgba(0,0,0,.05);
   animation:pulseGlow 2s ease-in-out infinite;
 }
@@ -138,12 +124,19 @@ body{
 .btn:active{transform:translateY(1px)}
 .btn-clear{background:#ececec;color:#111}
 
-/* ===== WhatsApp ===== */
+/* ===== WhatsApp / FAB ===== */
 .whatsapp-btn{
   position:fixed;bottom:18px;right:18px;width:54px;height:54px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;background:#25D366;color:#fff;
   font-size:22px;text-decoration:none;box-shadow:0 10px 28px rgba(0,0,0,.28);z-index:40
 }
+/* sobe um pouco no mobile para não sobrepor botões fixos */
+@media (max-width:768px){
+  .whatsapp-btn{ bottom:72px; right:18px; }
+}
+/* se marcar o body dessas páginas com as classes abaixo, sobe mais ainda */
+.cart-page .whatsapp-btn,
+.checkout-page .whatsapp-btn{ bottom:110px; }
 
 /* ===== Footer ===== */
 .footer .top{background:#1e6fbf;color:#fff}
@@ -226,17 +219,12 @@ body{
   .thumb img{height:160px}
   .topbar-inner{flex-direction:column;align-items:stretch;gap:10px}
   .right-wrap{flex-direction:column;align-items:stretch}
-  .search{
-    min-width:unset;width:100%;
-    max-width:100%;
-    margin:0;
-  }
+  .search{ min-width:unset;width:100%; max-width:100%; margin:0; }
   .menu{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
   .footer .cols{grid-template-columns:1fr}
 }
 
 /* ===== HEADER / NAVBAR (slim opcional) ===== */
-/* (mantido, caso você use .navbar em outra página) */
 .navbar {
   display: flex;
   align-items: center;
@@ -246,16 +234,11 @@ body{
   color: #fff;
   font-weight: 600;
 }
-.navbar-logo {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 15px;
-}
-.navbar-search { flex: 1; max-width: 300px; margin: 0 12px; }
-.navbar-search input { padding: 4px 10px; border-radius: 16px; border: none; outline: none; width: 100%; font-size: 13px; }
-.navbar-search button { padding: 4px 8px; border-radius: 50%; background: #fff; border: none; cursor: pointer; margin-left: -30px; box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
-.navbar-links { display: flex; align-items: center; gap: 14px; font-size: 13px; }
+.navbar-logo { display:flex; align-items:center; gap:6px; font-size:15px; }
+.navbar-search { flex:1; max-width:300px; margin:0 12px; }
+.navbar-search input { padding:4px 10px; border-radius:16px; border:none; outline:none; width:100%; font-size:13px; }
+.navbar-search button { padding:4px 8px; border-radius:50%; background:#fff; border:none; cursor:pointer; margin-left:-30px; box-shadow:0 1px 3px rgba(0,0,0,0.15); }
+.navbar-links { display:flex; align-items:center; gap:14px; font-size:13px; }
 .navbar-links a { color:#fff; text-decoration:none; font-weight:600; opacity:.9; }
 .navbar-links a:hover { opacity:1; text-decoration:underline; }
 
@@ -281,156 +264,185 @@ body{
 #welcome-overlay{
   position:fixed;
   inset:0;
-  width:100%; height:100%;
-  background:linear-gradient(135deg, #4f46e5, #3b82f6);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  width:100%;
+  height:100dvh;                          /* viewport dinâmica no mobile */
+  background:linear-gradient(135deg,#4f46e5,#3b82f6);
+  display:grid; place-items:center;        /* centralização real */
+  padding:24px;
   z-index:9999;
   animation:welcomeFade 2s ease forwards;
-  animation-delay:2.5s; /* tempo visível */
+  animation-delay:2.5s;
 }
 .welcome-content{
   text-align:center;
   color:#fff;
   animation:welcomeScale 1s ease;
+  max-width:min(92vw, 960px);
+  text-wrap:balance;
 }
 .welcome-content h1{
-  font-size:2.5rem;
+  white-space:nowrap;                      /* manter em uma linha */
+  font-size:clamp(18px, 5.2vw, 56px);      /* mais agressivo no mobile p/ não cortar */
+  line-height:1.08;
   margin:0 0 10px 0;
 }
+@media (max-width:480px){
+  .welcome-content h1{ font-size:clamp(16px, 5vw, 34px); }
+}
 .welcome-content span{ color:#ffd700; }
-.welcome-content p{ font-size:1.2rem; opacity:.9; }
-
-@keyframes welcomeFade{
-  to{ opacity:0; visibility:hidden; }
+.welcome-content p{
+  font-size:clamp(14px,3.6vw,20px);
+  opacity:.9; margin:0;
 }
-@keyframes welcomeScale{
-  from{ transform:scale(.7); opacity:0; }
-  to{ transform:scale(1); opacity:1; }
-}
+@keyframes welcomeFade{ to{ opacity:0; visibility:hidden; } }
+@keyframes welcomeScale{ from{ transform:scale(.7); opacity:0; } to{ transform:scale(1); opacity:1; } }
 
 /* ====== MiniStore — responsividade mobile sem mexer no desktop ====== */
-
-/* Bases seguras para imagens e tipografia fluida */
-:root{
-  /* escala de fonte que se adapta sem explodir no mobile */
-  --fs-base: clamp(14px, 2.6vw, 16px);
-  --radius: 14px;
-}
+:root{ --fs-base: clamp(14px, 2.6vw, 16px); --radius: 14px; }
 html{ font-size: var(--fs-base); }
 img{ max-width:100%; height:auto; display:block; }
-
-/* Container com respiro lateral no mobile */
 .container{ padding-left:16px; padding-right:16px; }
+button, .btn, input, select{ min-height:44px; }
 
-/* Toques maiores no mobile */
-button, .btn, input, select{
-  min-height:44px; /* acessibilidade */
-}
-
-/* Top bar: centraliza no mobile */
-@media (max-width: 768px){
-  .top-bar{ font-size: 0.95rem; }
+/* Top bar: central no mobile */
+@media (max-width:768px){
+  .top-bar{ font-size:.95rem; }
   .top-bar .top-bar-inner{ justify-content:center; }
   .top-bar .top-bar-center{ gap:8px; }
 }
 
-/* Header: empilha logo, busca e ícones */
-@media (max-width: 992px){
+/* Header empilhado no mobile */
+@media (max-width:992px){
   header.topbar{ padding:10px 0; }
   header.topbar .container{ display:flex; flex-direction:column; gap:10px; }
-  .topbar .brand,
-  .topbar .search,
-  .topbar .actions{ width:100%; }
+  .topbar .brand, .topbar .search, .topbar .actions{ width:100%; }
   .topbar .search input{ width:100%; }
   .topbar .actions{ display:flex; justify-content:space-between; }
 }
 
-/* Navbar: vira “linhas” e permite quebrar */
-@media (max-width: 768px){
-  .nav, .nav ul{
-    display:flex; flex-wrap:wrap; gap:10px;
-  }
+/* Navbar quebra de linha */
+@media (max-width:768px){
+  .nav, .nav ul{ display:flex; flex-wrap:wrap; justify-content:center; gap:10px; }
   .nav a{ padding:10px 12px; border-radius:12px; }
 }
 
-/* Hero: imagem acima, texto abaixo e tudo centralizado */
-@media (max-width: 768px){
-  .hero{
-    display:flex; flex-direction:column; gap:14px; text-align:center;
-    padding:18px;
+/* Centralizar “Cadastre‑se | Fazer login” no mobile */
+@media (max-width:768px){
+  .account-only{
+    width:100%;
+    display:flex; justify-content:center; align-items:center; gap:10px;
   }
+}
+
+/* Hero */
+@media (max-width:768px){
+  .hero{ display:flex; flex-direction:column; gap:14px; text-align:center; padding:18px; }
   .hero .hero-media{ order:-1; }
-  .hero .hero-title{ font-size: clamp(1.25rem, 5.4vw, 2rem); line-height:1.2; }
-  .hero .hero-sub{ font-size: 1rem; opacity:.9; }
+  .hero .hero-title{ font-size:clamp(1.25rem,5.4vw,2rem); line-height:1.2; }
+  .hero .hero-sub{ font-size:1rem; opacity:.9; }
   .hero .hero-cta .btn{ width:100%; }
 }
 
-/* Grade de produtos: 2 colunas no tablet, 1 no celular pequeno */
-.products-grid{
-  display:grid; grid-template-columns: repeat(4, 1fr); gap:18px;
-}
-@media (max-width: 1200px){
-  .products-grid{ grid-template-columns: repeat(3, 1fr); }
-}
-@media (max-width: 900px){
-  .products-grid{ grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 520px){
-  .products-grid{ grid-template-columns: 1fr; }
-}
+/* Grade de produtos original (outra grid) */
+.products-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+@media (max-width:1200px){ .products-grid{ grid-template-columns:repeat(3,1fr); } }
+@media (max-width:900px){  .products-grid{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:520px){  .products-grid{ grid-template-columns:1fr; } }
 
-/* Card do produto: ajusta espaçamentos e botões “tocáveis” */
-.product-card{
-  border-radius: var(--radius);
-  overflow:hidden;
-}
+/* Cards */
+.product-card{ border-radius:var(--radius); overflow:hidden; }
 .product-card .price{ font-size:1.05rem; }
 .product-card .actions .btn{ width:100%; }
 
-/* Banner/Seções em duas colunas: viram coluna única no mobile */
-.split, .grid-2{
-  display:grid; grid-template-columns: 1fr 1fr; gap:20px;
-}
-@media (max-width: 768px){
-  .split, .grid-2{ grid-template-columns: 1fr; }
+/* Seções 2 colunas -> 1 coluna */
+.split, .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+@media (max-width:768px){ .split, .grid-2{ grid-template-columns:1fr; } }
+
+/* Carrinho lateral */
+@media (max-width:768px){
+  .cart-drawer{ width:100vw; max-width:none; left:0; right:0; border-radius:16px 16px 0 0; }
 }
 
-/* Carrinho lateral: ocupa tela toda no mobile (se você usa sidebar) */
-@media (max-width: 768px){
-  .cart-drawer{
-    width:100vw; max-width:none; left:0; right:0; border-radius:16px 16px 0 0;
-  }
-}
-
-/* Formulários (contato/checkout): uma coluna e inputs 100% */
-@media (max-width: 768px){
+/* Formulários genéricos */
+@media (max-width:768px){
   .form-grid{ display:grid; grid-template-columns:1fr; gap:12px; }
   .form-grid input, .form-grid select, .form-grid textarea{ width:100%; }
   .form-actions .btn{ width:100%; }
 }
 
-/* Tabelas (resumo do pedido): rolagem horizontal suave no mobile */
-@media (max-width: 768px){
+/* Tabelas */
+@media (max-width:768px){
   .table-wrapper{ overflow:auto; -webkit-overflow-scrolling: touch; }
   table{ min-width:600px; }
 }
 
-/* Rodapé: empilha colunas e centraliza */
-@media (max-width: 768px){
-  footer .footer-grid{
-    display:grid; grid-template-columns:1fr; gap:16px; text-align:center;
+/* Rodapé stack */
+@media (max-width:768px){
+  footer .footer-grid{ display:grid; grid-template-columns:1fr; gap:16px; text-align:center; }
+}
+
+/* Utilitários */
+@media (max-width:768px){ .hide-sm{ display:none !important; } }
+@media (min-width:769px){ .show-sm{ display:none !important; } }
+
+/* Evita “estouro” de textos longos */
+.product-card .title, .hero .hero-title{ word-wrap:break-word; overflow-wrap:anywhere; }
+
+/* ===== AJUSTES FINOS EXTRA ===== */
+
+/* Header centralizado no mobile */
+@media (max-width:768px){
+  header, .topbar, .topbar .container{ display:flex; flex-direction:column; align-items:center; gap:8px; }
+  .topbar .brand, .brand, .site-logo, header .logo{ width:100%; display:flex; justify-content:center; text-align:center; }
+  .brand-logo{ margin:0 auto; }
+  .topbar .search{ width:100%; }
+  .topbar .actions{ width:100%; display:flex; justify-content:space-between; }
+  .menu{ justify-content:center; }
+}
+
+/* Promo mais “clean” e em 2 linhas no mobile */
+@media (max-width:768px){
+  .promo-strip{
+    display:grid; grid-template-columns:1fr; row-gap:8px;
+    padding:10px 12px; margin:12px 0;
+  }
+  .promo-strip .btn{
+    justify-self:center;
+    font-size:.9rem; padding:8px 12px; border-radius:12px;
+    width:auto; min-width:unset;
   }
 }
 
-/* Utilitários: mostrar/ocultar por breakpoint sem mexer no HTML existente */
-@media (max-width: 768px){ .hide-sm{ display:none !important; } }
-@media (min-width: 769px){ .show-sm{ display:none !important; } }
-
-/* Evita “estouro” de textos longos em nomes de produtos */
-.product-card .title,
-.hero .hero-title{
-  word-wrap: break-word;
-  overflow-wrap: anywhere;
+/* Newsletter footer empilhada */
+@media (max-width:768px){
+  .footer .top .container{ flex-direction:column; align-items:stretch; gap:10px; }
+  .footer .top input, .footer .top button{ width:100%; }
 }
+
+/* Forçar 2 colunas na .grid (produtos) no celular */
+@media (max-width:640px){ .grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:380px){ .grid{ grid-template-columns:1fr; } }
+
+/* Cards mais compactos no mobile */
+@media (max-width:768px){
+  .card{ border-radius:16px; }
+  .card h3{ font-size:1rem; line-height:1.25; }
+  .btn{ width:100%; }
+}
+
+/* Modais sempre visíveis/roláveis */
+.modal-backdrop{
+  position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+  background:rgba(0,0,0,.45); padding:16px; z-index:1000;
+}
+.modal-backdrop.is-open{ display:flex; }
+.modal, .modal-dialog, .modal-content{
+  width:min(92vw,560px); max-height:85vh; overflow:auto; border-radius:16px;
+}
+.modal-header{ position:sticky; top:0; background:inherit; z-index:1; }
+@media (max-width:768px){
+  .modal-header .close, .modal .btn-close{ width:36px; height:36px; display:grid; place-items:center; border-radius:12px; }
+}
+
+/* Segurança extra */
+html, body{ overflow-x:hidden; }
